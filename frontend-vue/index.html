@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <title>Vue 特效 Demo</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    .fade-enter-active, .fade-leave-active {
+      transition: all 0.8s ease;
+    }
+    .fade-enter-from, .fade-leave-to {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    .fade-enter-to, .fade-leave-from {
+      opacity: 1;
+      transform: scale(1);
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1>{{ message }}</h1>
+    <button @click="toggle">切換顯示</button>
+    <transition name="fade">
+      <p v-if="show">✨ 這是一個會淡入淡出 + 放大縮小的特效 ✨</p>
+    </transition>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+    createApp({
+      data() {
+        return { message: "Vue 前端 🚀", show: true }
+      },
+      methods: {
+        toggle() {
+          this.show = !this.show
+        }
+      }
+    }).mount("#app")
+  </script>
+</body>
+</html>
