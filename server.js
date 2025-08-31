@@ -1,19 +1,26 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const app = express();
 
 app.use(cors());
 
-// API 路由
+// API
 app.get("/api/hello", (req, res) => {
   res.json({ message: "Hello from Node.js backend 🚀" });
 });
 
-// 靜態檔案 (如果你要 Node.js 提供 Vue/React 前端)
-app.use(express.static("frontend-vue")); 
-// 或改成 frontend-react 看你要跑哪個
+// Vue 靜態檔案
+app.use(express.static(path.join(__dirname, "frontend-vue")));
 
-const port = 3000;
+// React 靜態檔案 (如果要切換，就改成 frontend-react)
+// app.use(express.static(path.join(__dirname, "frontend-react")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend-vue", "index.html"));
+});
+
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`✅ Server running on http://localhost:${port}`);
 });
