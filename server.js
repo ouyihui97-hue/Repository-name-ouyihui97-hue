@@ -1,22 +1,20 @@
 const express = require("express");
-const cors = require("cors");
 const path = require("path");
 const app = express();
 
-app.use(cors());
-
-// API
+// API 範例
 app.get("/api/hello", (req, res) => {
-  res.json({ message: "Hello from Node.js backend 🚀" });
+  res.json({ message: "Hello from API!" });
 });
 
-// Vue 靜態檔案
-app.use(express.static(path.join(__dirname, "frontend-vue")));
+// 🔹 Vue 靜態檔案
+app.use("/vue", express.static(path.join(__dirname, "frontend-vue")));
 
-// React 靜態檔案 (如果要切換，就改成 frontend-react)
-// app.use(express.static(path.join(__dirname, "frontend-react")));
+// 🔹 React 靜態檔案
+app.use("/react", express.static(path.join(__dirname, "frontend-react")));
 
-app.get("*", (req, res) => {
+// 預設導向 Vue 首頁
+app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend-vue", "index.html"));
 });
 
